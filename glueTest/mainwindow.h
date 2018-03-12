@@ -60,16 +60,23 @@
 #include "tabs.h"
 
 QT_BEGIN_NAMESPACE
-
+//Term
 class QLabel;
 class QDialogButtonBox;
 class QFileInfo;
+
+//Text
+class QAction;
+class QMenu;
+class QPlainTextEdit;
+class QSessionManager;
+
+//Tabs
 class QTabWidget;
 
 namespace Ui {
 class MainWindow;
 }
-
 QT_END_NAMESPACE
 
 class Console;
@@ -83,6 +90,11 @@ public:
     explicit MainWindow(const QString &fileName, QWidget *parent = nullptr);
     ~MainWindow();
 
+    void loadFile(const QString &fileName);
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
 private slots:
     void openSerialPort();
     void closeSerialPort();
@@ -92,11 +104,21 @@ private slots:
 
     void handleError(QSerialPort::SerialPortError error);
 
-private:
-    void initActionsConnections();
+    void newFile();
+    void open();
+    bool save();
+    bool saveAs();
+    void documentWasModified();
+#ifndef QT_NO_SESSIONMANAGER
+    void commitData(QSessionManager &);
+#endif
+
 
 private:
     void showStatusMessage(const QString &message);
+
+    //make slot/signal connections
+    void initActionsConnections();
 
     // modify this
     void createActions();
@@ -119,6 +141,7 @@ private:
     //Logger variables
     QString strippedName(const QString &fullFileName);
 
+    //Text vars
     QPlainTextEdit *textEdit;
     QString curFile;
 };

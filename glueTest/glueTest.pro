@@ -41,9 +41,7 @@ HEADERS += \
     commandpacket.h \
     defines.h
 
-FORMS += \
-    mainwindow.ui \
-    settingsdialog.ui
+FORMS +=
 
 RESOURCES += \
     terminal.qrc

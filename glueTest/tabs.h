@@ -59,8 +59,13 @@ private:
 class LoggerTab : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit LoggerTab(const QFileInfo &fileInfo, QWidget *parent = 0);
+    explicit LoggerTab(const QFileInfo &fileInfo, QPlainTextEdit *textEdit, QWidget *parent = 0);
+
+private:
+    void createActions();
+    void createStatusBar();
+
 };
 #endif // TABDIALOG_H
